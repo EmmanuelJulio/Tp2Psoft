@@ -1,10 +1,11 @@
 ﻿
+using Dominio.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Dominio.Entities
+namespace Dominio.DTOs
 {
     public class CarritoDTO 
     {

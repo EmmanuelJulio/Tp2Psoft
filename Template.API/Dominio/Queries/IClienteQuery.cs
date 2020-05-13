@@ -1,4 +1,5 @@
-﻿using Dominio.DTOs;
+﻿
+using Dominio.DTOs;
 using Dominio.Entities;
 using System;
 using System.Collections.Generic;
@@ -6,8 +7,8 @@ using System.Text;
 
 namespace Dominio.Queries
 {
-    public interface IProductoQuery
+    public interface IClienteQuery
     {
-        List<ProductoDTO> GetProductoCOD(string codigo);
+        List<ClienteDTO> GetClientedni(string dni);
     }
 }

@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Services;
+using CAPA_DATO.Queries;
 using Datos;
 using Datos.Comandos;
 using Datos.Queries;
@@ -39,36 +40,38 @@ namespace Template.API2
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            var connectionString = Configuration.GetSection("ConnectionString").Value;
-            services.AddDbContext<ContextApplication>(options => options.UseSqlServer(connectionString));
-            //sqlkata servicios
-            //services.AddTransient<Compiler, SqlServerCompiler>();
-            //services.AddTransient<IDbConnection>(b =>
-            //{
-            //    return new SqlConnection(connectionString);
-            //});
-            //Repositorio generico
-          //  public static IServiceCollection AddTransient<TService>(this IServiceCollection services) where TService : class;
-         //   services.AddTransient<IGenericRepository, GenericRepository>();
-            //servicios de las endidades
-           
-            
-            services.AddTransient<IRepositorio<Entidad> ,Repositorio<Entidad>>();
-            services.AddTransient<IEntidadService<Entidad>, EntidadService>();
-        //    services.AddTransient<IEntidadService<Producto>, ProductoService>();
+            var conecctionString = Configuration.GetSection("ConnectionString").Value;
+            // EF CORE 
+            services.AddDbContext<ContextApplication>(option => option.UseSqlServer(conecctionString));
 
-
-
-
-
-
-
-
-
-
+            //SQLKATA
+            services.AddTransient<Compiler, SqlServerCompiler>();
+            services.AddTransient<IDbConnection>(b =>
+            {
+                return new SqlConnection(conecctionString);
+            });
+            services.AddTransient<IGenericsRepositoty, GenericRepository>();
+            services.AddTransient<ICarritoService, CarritoService>();
+            services.AddTransient<IClienteService, ClienteService>();
+            services.AddTransient<IProductoServices, ProductoServices>();
+            services.AddTransient<IVentaService, VentaService>();
+            services.AddTransient<IVentaQuery, VentaQuery>();
+            services.AddTransient<ICarritoProductoService, CarritoProductoService>();
+            services.AddTransient<IClienteQuery, ClienteQuery>();
             services.AddTransient<IProductoQuery, ProductoQuery>();
 
-   
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

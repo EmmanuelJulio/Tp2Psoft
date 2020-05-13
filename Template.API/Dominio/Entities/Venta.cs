@@ -7,7 +7,8 @@ namespace Dominio.Entities
     public class Venta : Entidad
     {
         
-        public int carritoId { get; set; }
+        public int carrito { get; set; }
+        public DateTime Fecha { get; set; }
         public virtual Carrito CarritoNavigator { get; set; }
     }
 }

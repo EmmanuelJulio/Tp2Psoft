@@ -1,4 +1,4 @@
-﻿using Dominio.Entities;
+﻿using Dominio.DTOs;
 using Dominio.Queries;
 using SqlKata.Compilers;
 using SqlKata.Execution;
@@ -6,27 +6,26 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 
-namespace Datos.Queries
+namespace CAPA_DATO.Queries
 {
-    public class ProductoQuery :IProductoQuery
+    public class ProductoQuery : IProductoQuery
     {
         private readonly IDbConnection connection;
-        private readonly Compiler sqlKataCompiler;
+        private readonly Compiler compiler;
 
-        public ProductoQuery(IDbConnection connection, Compiler sqlKataCompiler)
+        public ProductoQuery(IDbConnection connection, Compiler compiler)
         {
             this.connection = connection;
-            this.sqlKataCompiler = sqlKataCompiler;
+            this.compiler = compiler;
         }
 
-        public List<ProductoDTO> GetAllProductos()
+        public List<ProductoDTO> GetProductoCOD(string codigo)
         {
-            var db = new QueryFactory(connection, sqlKataCompiler);
-            var query = db.Query("Productos").Select( "Nombre", "Precio", "Marca", "Codigo").Get<ProductoDTO>().ToList();
-
-            return query;
+            var db = new QueryFactory(connection, compiler);
+            var result = db.Query("Product").WhereLike("codigo", $"%{codigo}%").Get<ProductoDTO>().ToList();
+            return result;
         }
     }
 }
